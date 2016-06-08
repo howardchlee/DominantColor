@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="DominantColors" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="ywZ-SE-44z">
+                                <rect key="frame" x="70" y="40" width="274" height="359"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXR-Kb-Bqg">
+                                        <rect key="frame" x="0.0" y="0.0" width="274" height="274"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="rowlett" translatesAutoresizingMaskIntoConstraints="NO" id="Uxc-nG-JJz">
+                                                <rect key="frame" x="0.0" y="0.0" width="682" height="525"/>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Uxc-nG-JJz" secondAttribute="trailing" id="NMr-LW-t8i"/>
+                                            <constraint firstItem="Uxc-nG-JJz" firstAttribute="top" secondItem="XXR-Kb-Bqg" secondAttribute="top" id="R3g-aO-g2b"/>
+                                            <constraint firstItem="Uxc-nG-JJz" firstAttribute="leading" secondItem="XXR-Kb-Bqg" secondAttribute="leading" id="gy5-vD-eg0"/>
+                                            <constraint firstAttribute="bottom" secondItem="Uxc-nG-JJz" secondAttribute="bottom" id="i5g-WN-sHM"/>
+                                            <constraint firstAttribute="width" secondItem="XXR-Kb-Bqg" secondAttribute="height" multiplier="1:1" id="jBp-dK-ZJU"/>
+                                        </constraints>
+                                    </scrollView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QSy-d9-HaY">
+                                        <rect key="frame" x="0.0" y="299" width="274" height="60"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2cB-td-ncT" userLabel="color1">
+                                                <rect key="frame" x="0.0" y="0.0" width="61" height="60"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FrG-GB-sjA" userLabel="color2">
+                                                <rect key="frame" x="71" y="0.0" width="61" height="60"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EFQ-9m-ugl" userLabel="color3">
+                                                <rect key="frame" x="142" y="0.0" width="61" height="60"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MzV-Qb-Jzw" userLabel="color4">
+                                                <rect key="frame" x="213" y="0.0" width="61" height="60"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="yhM-gj-2w6"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="XXR-Kb-Bqg" firstAttribute="leading" secondItem="ywZ-SE-44z" secondAttribute="leading" id="25f-In-aZT"/>
+                                    <constraint firstAttribute="trailing" secondItem="QSy-d9-HaY" secondAttribute="trailing" id="JPM-lT-yx1"/>
+                                    <constraint firstAttribute="trailing" secondItem="XXR-Kb-Bqg" secondAttribute="trailing" id="Pm8-ud-AuZ"/>
+                                    <constraint firstItem="QSy-d9-HaY" firstAttribute="leading" secondItem="ywZ-SE-44z" secondAttribute="leading" id="wOY-U6-yLE"/>
+                                </constraints>
+                            </stackView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K2L-Ea-bDR">
+                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="QoX-xm-moS"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem systemItem="refresh" id="lfd-7J-715">
+                                        <connections>
+                                            <action selector="recalculateColors:" destination="BYZ-38-t0r" id="SWY-tH-cOk"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="YuY-mp-9iM"/>
+                                    <barButtonItem systemItem="organize" id="mzX-ZP-PYW">
+                                        <connections>
+                                            <action selector="selectImage:" destination="BYZ-38-t0r" id="ebA-Rl-iPV"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="AJp-Ng-AKg"/>
+                                    <barButtonItem systemItem="camera" id="gKi-Sg-xSz">
+                                        <connections>
+                                            <action selector="selectImage:" destination="BYZ-38-t0r" id="WId-Xu-wpp"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ATo-zr-pe0"/>
+                                    <barButtonItem systemItem="trash" id="IT0-pr-XIE">
+                                        <connections>
+                                            <action selector="clearImage:" destination="BYZ-38-t0r" id="Nn6-sy-qub"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="ywZ-SE-44z" secondAttribute="trailing" constant="50" id="36n-kX-EJd"/>
+                            <constraint firstAttribute="trailing" secondItem="K2L-Ea-bDR" secondAttribute="trailing" id="Ami-VN-KLZ"/>
+                            <constraint firstItem="K2L-Ea-bDR" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ywZ-SE-44z" secondAttribute="bottom" constant="20" id="TCk-fF-h0s"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="K2L-Ea-bDR" secondAttribute="bottom" id="htm-Ds-XZU"/>
+                            <constraint firstItem="ywZ-SE-44z" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="kVS-nb-HP8"/>
+                            <constraint firstItem="ywZ-SE-44z" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="o6P-Xk-POq"/>
+                            <constraint firstItem="K2L-Ea-bDR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="s3o-Bs-6pm"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="cameraButton" destination="gKi-Sg-xSz" id="es5-0y-DMr"/>
+                        <outlet property="color1" destination="2cB-td-ncT" id="pKh-Ks-6oW"/>
+                        <outlet property="color2" destination="FrG-GB-sjA" id="j18-dF-NL1"/>
+                        <outlet property="color3" destination="EFQ-9m-ugl" id="yYp-gR-UvE"/>
+                        <outlet property="color4" destination="MzV-Qb-Jzw" id="3yV-3e-Wbc"/>
+                        <outlet property="fileButton" destination="mzX-ZP-PYW" id="KFp-tA-Xc2"/>
+                        <outlet property="imageView" destination="Uxc-nG-JJz" id="UYP-bT-5kU"/>
+                        <outlet property="scrollView" destination="XXR-Kb-Bqg" id="rKN-Yd-bum"/>
+                        <outlet property="trashButton" destination="IT0-pr-XIE" id="8CC-cR-rpc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="rowlett" width="682" height="525"/>
+    </resources>
+</document>

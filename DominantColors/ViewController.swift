@@ -9,18 +9,19 @@
 import UIKit
 
 let maxDomColor:Int = 5
-let colorBlockSize: Int = 32
 
 public class ColorBlock: NSObject {
     let r: Int
     let g: Int
     let b: Int
     var count: Int = 0
+    var size: Int = 32
     
-    init(r: Int, g: Int, b: Int) {
+    init(r: Int, g: Int, b: Int, size: Int) {
         self.r = r
         self.g = g
         self.b = b
+        self.size = size
     }
     
     
@@ -30,9 +31,9 @@ public class ColorBlock: NSObject {
     
     var represetativeColor : UIColor {
 
-        let rf = CGFloat(r * colorBlockSize + colorBlockSize/2)
-        let gf = CGFloat(g * colorBlockSize + colorBlockSize/2)
-        let bf = CGFloat(b * colorBlockSize + colorBlockSize/2)
+        let rf = CGFloat(r * size + size/2)
+        let gf = CGFloat(g * size + size/2)
+        let bf = CGFloat(b * size + size/2)
         return UIColor(red: rf/255.0, green: gf/255.0, blue: bf/255.0, alpha: 1)
     }
     
@@ -43,8 +44,6 @@ public class ColorBlock: NSObject {
 }
 
 class ViewController: UIViewController {
-
-    var colorMap: [ColorBlock] = []
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -58,6 +57,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var trashButton: UIBarButtonItem!
 
+    var colorBlockSize: Int = 32
+
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraButton.enabled = (UIImagePickerController.isSourceTypeAvailable(.Camera))
@@ -69,7 +70,12 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        calculateDominantColors()
+        
+        takeSnapshotWithCompletion({ (image: UIImage) in
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
+                self?.calculateDominantColorsForImage(image)
+                })
+        })
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
@@ -92,7 +98,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func recalculateColors(sender: AnyObject) {
-        calculateDominantColors()
+        takeSnapshotWithCompletion({ (image: UIImage) in
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
+                self?.calculateDominantColorsForImage(image)
+                })
+        })
     }
 
     @IBAction func clearImage(sender: AnyObject) {
@@ -104,26 +114,19 @@ class ViewController: UIViewController {
         trashButton.enabled = false
     }
 
-    func calculateDominantColors() {
-        //guard let image = imageView.image else { return }
-        
-        UIGraphicsBeginImageContextWithOptions(scrollView.bounds.size, true, 1)
-        let offsetRect = CGRect(x: 0, y: 0, width: scrollView.bounds.size.width, height: scrollView.bounds.size.height)
-        scrollView.drawViewHierarchyInRect(offsetRect, afterScreenUpdates: true)
-        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
+    func calculateDominantColorsForImage(image: UIImage) {
     
-        // Clear out color map
-        colorMap = []
         let nBlocks = 256 / colorBlockSize
+        var colorMap: [ColorBlock] = []
+        var dominantColors: [ColorBlock] = []
+
         for r in 0..<nBlocks {
             for g in 0..<nBlocks {
                 for b in 0..<nBlocks {
-                    colorMap.append(ColorBlock(r: r, g: g, b: b))
+                    colorMap.append(ColorBlock(r: r, g: g, b: b, size: colorBlockSize))
                 }
             }
         }
-        var dominantColors: [ColorBlock] = []
 
         let pixelData = CGDataProviderCopyData(CGImageGetDataProvider(image.CGImage))
         let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
@@ -184,6 +187,21 @@ class ViewController: UIViewController {
             }
         }
     }
+    @IBAction func sliderValueChanged(sender: UISlider) {
+        let targetValue = Int(sender.value + 0.5)
+        sender.value = Float(targetValue)
+        colorBlockSize = Int(pow(2, Double(targetValue + 3)))
+    }
+    
+    func takeSnapshotWithCompletion(completion: ((UIImage) ->())?) {
+        UIGraphicsBeginImageContextWithOptions(scrollView.bounds.size, true, 1)
+        let offsetRect = CGRect(x: 0, y: 0, width: scrollView.bounds.size.width, height: scrollView.bounds.size.height)
+        scrollView.drawViewHierarchyInRect(offsetRect, afterScreenUpdates: true)
+        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        completion?(image)
+    }
     
 }
 
@@ -200,6 +218,24 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
 extension ViewController: UIScrollViewDelegate {
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return imageView
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            takeSnapshotWithCompletion({ (image: UIImage) in
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
+                    self?.calculateDominantColorsForImage(image)
+                })
+            })
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        takeSnapshotWithCompletion({ (image: UIImage) in
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
+                self?.calculateDominantColorsForImage(image)
+            })
+        })
     }
 }
 

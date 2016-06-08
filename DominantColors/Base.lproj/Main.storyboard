@@ -19,8 +19,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="ywZ-SE-44z">
-                                <rect key="frame" x="70" y="40" width="274" height="359"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="ywZ-SE-44z">
+                                <rect key="frame" x="70" y="40" width="274" height="414"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXR-Kb-Bqg">
                                         <rect key="frame" x="0.0" y="0.0" width="274" height="274"/>
@@ -61,11 +61,19 @@
                                             <constraint firstAttribute="height" constant="60" id="yhM-gj-2w6"/>
                                         </constraints>
                                     </stackView>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="J7F-7z-8Bg">
+                                        <rect key="frame" x="-2" y="384" width="278" height="31"/>
+                                        <connections>
+                                            <action selector="sliderValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="mhD-fe-2jo"/>
+                                        </connections>
+                                    </slider>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="XXR-Kb-Bqg" firstAttribute="leading" secondItem="ywZ-SE-44z" secondAttribute="leading" id="25f-In-aZT"/>
+                                    <constraint firstItem="J7F-7z-8Bg" firstAttribute="leading" secondItem="ywZ-SE-44z" secondAttribute="leading" id="F4m-3o-LP2"/>
                                     <constraint firstAttribute="trailing" secondItem="QSy-d9-HaY" secondAttribute="trailing" id="JPM-lT-yx1"/>
                                     <constraint firstAttribute="trailing" secondItem="XXR-Kb-Bqg" secondAttribute="trailing" id="Pm8-ud-AuZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="J7F-7z-8Bg" secondAttribute="trailing" id="osw-eV-wzZ"/>
                                     <constraint firstItem="QSy-d9-HaY" firstAttribute="leading" secondItem="ywZ-SE-44z" secondAttribute="leading" id="wOY-U6-yLE"/>
                                 </constraints>
                             </stackView>

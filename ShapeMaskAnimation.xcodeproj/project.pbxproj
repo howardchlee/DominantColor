@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F2AB7421D092BA900101AE4 /* GradientTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2AB7411D092BA900101AE4 /* GradientTextView.swift */; };
 		6F7AC0FA1D091EDE00D89B6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7AC0F91D091EDE00D89B6C /* AppDelegate.swift */; };
 		6F7AC0FC1D091EDE00D89B6C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7AC0FB1D091EDE00D89B6C /* ViewController.swift */; };
 		6F7AC0FF1D091EDE00D89B6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F7AC0FD1D091EDE00D89B6C /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6F2AB7411D092BA900101AE4 /* GradientTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientTextView.swift; sourceTree = "<group>"; };
 		6F7AC0F61D091EDE00D89B6C /* ShapeMaskAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShapeMaskAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F7AC0F91D091EDE00D89B6C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6F7AC0FB1D091EDE00D89B6C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				6F7AC1001D091EDE00D89B6C /* Assets.xcassets */,
 				6F7AC1021D091EDE00D89B6C /* LaunchScreen.storyboard */,
 				6F7AC1051D091EDE00D89B6C /* Info.plist */,
+				6F2AB7411D092BA900101AE4 /* GradientTextView.swift */,
 			);
 			path = ShapeMaskAnimation;
 			sourceTree = "<group>";
@@ -136,6 +139,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F2AB7421D092BA900101AE4 /* GradientTextView.swift in Sources */,
 				6F7AC0FC1D091EDE00D89B6C /* ViewController.swift in Sources */,
 				6F7AC0FA1D091EDE00D89B6C /* AppDelegate.swift in Sources */,
 			);
@@ -289,6 +293,7 @@
 				6F7AC10A1D091EDE00D89B6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

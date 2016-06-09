@@ -19,8 +19,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fzK-DZ-jWP">
-                                <rect key="frame" x="20" y="20" width="560" height="580"/>
-                                <mutableString key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in rutrum lorem, ac tincidunt neque. Suspendisse potenti. Suspendisse non dolor eleifend, posuere orci in, fermentum odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce convallis efficitur neque, in convallis nibh dictum suscipit. Suspendisse velit tellus, fermentum id arcu quis, rutrum rutrum lorem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
+                                <rect key="frame" x="20" y="20" width="560" height="500"/>
+                                <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in rutrum lorem, ac tincidunt neque. Suspendisse potenti. Suspendisse non dolor eleifend, posuere orci in, fermentum odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce convallis efficitur neque, in convallis nibh dictum suscipit. Suspendisse velit tellus, fermentum id arcu quis, rutrum rutrum lorem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
 
 Nam ac arcu eu urna faucibus euismod. Integer vulputate non turpis ut congue. Nam diam ligula, consectetur sed tellus quis, semper tincidunt orci. Nullam placerat dignissim justo, sit amet scelerisque enim eleifend vitae. Ut mattis sollicitudin leo at placerat. Fusce vehicula scelerisque mauris vitae porttitor. Fusce id nisi magna. Aenean interdum imperdiet diam.
 
@@ -30,18 +30,26 @@ Sed maximus ultricies velit. Quisque eget tortor sed elit interdum eleifend. Pra
 
 Phasellus ullamcorper pellentesque efficitur. Sed pharetra interdum eros, ac vehicula enim ullamcorper at. Nam nibh nunc, rhoncus vel ex eget, molestie porttitor dolor. Donec congue mattis elit et euismod. Morbi sem ligula, accumsan non lorem a, ultrices malesuada justo. Vivamus tincidunt enim mollis libero elementum hendrerit. Donec a lacus vehicula, eleifend turpis nec, semper purus. Sed molestie magna nunc, et finibus turpis condimentum ac. Suspendisse at tortor mi. Maecenas at lectus malesuada, laoreet magna a, sodales quam. Nunc vel molestie tortor, quis volutpat lacus.
 
-</mutableString>
+</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="psM-WZ-1WU" customClass="GradientTextView" customModule="ShapeMaskAnimation" customModuleProvider="target">
+                                <rect key="frame" x="20" y="530" width="560" height="70"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="fzK-DZ-jWP" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="4vG-8T-Dws"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="fzK-DZ-jWP" secondAttribute="bottom" id="UNh-3L-Anu"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="psM-WZ-1WU" secondAttribute="bottom" id="Gkx-zm-3tG"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="fzK-DZ-jWP" secondAttribute="bottom" constant="80" id="Wro-vB-znT"/>
+                            <constraint firstItem="psM-WZ-1WU" firstAttribute="top" secondItem="fzK-DZ-jWP" secondAttribute="bottom" constant="10" id="gFJ-fW-H0X"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fzK-DZ-jWP" secondAttribute="trailing" id="gMz-n9-l90"/>
                             <constraint firstItem="fzK-DZ-jWP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="gxQ-8E-R7b"/>
+                            <constraint firstItem="psM-WZ-1WU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="v3Y-dO-0sz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="psM-WZ-1WU" secondAttribute="trailing" id="vLo-O4-Sl6"/>
                         </constraints>
                     </view>
                 </viewController>

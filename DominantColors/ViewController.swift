@@ -73,11 +73,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        takeSnapshotWithCompletion({ (image: UIImage) in
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
-                self?.calculateDominantColorsForImage(image)
-                })
-        })
+        refreshDominantColorsInScrollView()
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
@@ -100,11 +96,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func recalculateColors(sender: AnyObject) {
-        takeSnapshotWithCompletion({ (image: UIImage) in
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
-                self?.calculateDominantColorsForImage(image)
-                })
-        })
+        refreshDominantColorsInScrollView()
     }
 
     @IBAction func clearImage(sender: AnyObject) {
@@ -116,9 +108,9 @@ class ViewController: UIViewController {
         trashButton.enabled = false
     }
 
-    func calculateDominantColorsForImage(image: UIImage) {
+    func calculateDominantColorsForImage(image: UIImage, blockSize: Float) {
     
-        let nBlocks = Int(ceil(256.0 / colorBlockSize))
+        let nBlocks = Int(ceil(256.0 / blockSize))
         var colorMap: [ColorBlock] = []
         var dominantColors: [ColorBlock] = []
 
@@ -139,9 +131,9 @@ class ViewController: UIViewController {
         for y in 0 ..< height {
             for x in 0 ..< width {
                 let pixelIndex: Int = ((Int(image.size.width) * y) + x) * 4
-                let r = Int(Float(data[pixelIndex+2]) / colorBlockSize)
-                let g = Int(Float(data[pixelIndex+1]) / colorBlockSize)
-                let b = Int(Float(data[pixelIndex]) / colorBlockSize)
+                let r = Int(Float(data[pixelIndex+2]) / blockSize)
+                let g = Int(Float(data[pixelIndex+1]) / blockSize)
+                let b = Int(Float(data[pixelIndex]) / blockSize)
                 
                 let index = r * nBlocks * nBlocks + g * nBlocks + b
                 colorMap[index].count += 1
@@ -191,11 +183,7 @@ class ViewController: UIViewController {
     }
     @IBAction func sliderValueChanged(sender: UISlider) {
         colorBlockSize = Float(pow(2, Double(sender.value)))
-        takeSnapshotWithCompletion({ (image: UIImage) in
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
-                self?.calculateDominantColorsForImage(image)
-                })
-        })
+        refreshDominantColorsInScrollView()
     }
     
     func takeSnapshotWithCompletion(completion: ((UIImage) ->())?) {
@@ -212,6 +200,14 @@ class ViewController: UIViewController {
             
             completion?(image)
         }
+    }
+    
+    func refreshDominantColorsInScrollView() {
+        takeSnapshotWithCompletion({ (image: UIImage) in
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [unowned self] in
+                self.calculateDominantColorsForImage(image, blockSize: self.colorBlockSize)
+                })
+        })
     }
     
 }
@@ -240,20 +236,12 @@ extension ViewController: UIScrollViewDelegate {
         cachedImageIsUpToDate = false
 
         if !decelerate {
-            takeSnapshotWithCompletion({ (image: UIImage) in
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
-                    self?.calculateDominantColorsForImage(image)
-                })
-            })
+            refreshDominantColorsInScrollView()
         }
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        takeSnapshotWithCompletion({ (image: UIImage) in
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
-                self?.calculateDominantColorsForImage(image)
-            })
-        })
+        refreshDominantColorsInScrollView()
     }
 }
 

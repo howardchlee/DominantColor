@@ -15,9 +15,9 @@ public class ColorBlock: NSObject {
     let g: Int
     let b: Int
     var count: Int = 0
-    var size: Int = 32
+    var size: Float = 32.0
     
-    init(r: Int, g: Int, b: Int, size: Int) {
+    init(r: Int, g: Int, b: Int, size: Float) {
         self.r = r
         self.g = g
         self.b = b
@@ -31,9 +31,9 @@ public class ColorBlock: NSObject {
     
     var represetativeColor : UIColor {
 
-        let rf = CGFloat(r * size + size/2)
-        let gf = CGFloat(g * size + size/2)
-        let bf = CGFloat(b * size + size/2)
+        let rf = CGFloat(Float(r) * size + size/2.0)
+        let gf = CGFloat(Float(g) * size + size/2.0)
+        let bf = CGFloat(Float(b) * size + size/2.0)
         return UIColor(red: rf/255.0, green: gf/255.0, blue: bf/255.0, alpha: 1)
     }
     
@@ -57,7 +57,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     @IBOutlet weak var trashButton: UIBarButtonItem!
 
-    var colorBlockSize: Int = 32
+    var colorBlockSize: Float = 32
+    var cachedImage: UIImage?
+    var cachedImageIsUpToDate: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,7 +118,7 @@ class ViewController: UIViewController {
 
     func calculateDominantColorsForImage(image: UIImage) {
     
-        let nBlocks = 256 / colorBlockSize
+        let nBlocks = Int(ceil(256.0 / colorBlockSize))
         var colorMap: [ColorBlock] = []
         var dominantColors: [ColorBlock] = []
 
@@ -137,9 +139,9 @@ class ViewController: UIViewController {
         for y in 0 ..< height {
             for x in 0 ..< width {
                 let pixelIndex: Int = ((Int(image.size.width) * y) + x) * 4
-                let r = Int(data[pixelIndex+2] / UInt8(colorBlockSize))
-                let g = Int(data[pixelIndex+1] / UInt8(colorBlockSize))
-                let b = Int(data[pixelIndex] / UInt8(colorBlockSize))
+                let r = Int(Float(data[pixelIndex+2]) / colorBlockSize)
+                let g = Int(Float(data[pixelIndex+1]) / colorBlockSize)
+                let b = Int(Float(data[pixelIndex]) / colorBlockSize)
                 
                 let index = r * nBlocks * nBlocks + g * nBlocks + b
                 colorMap[index].count += 1
@@ -188,19 +190,28 @@ class ViewController: UIViewController {
         }
     }
     @IBAction func sliderValueChanged(sender: UISlider) {
-        let targetValue = Int(sender.value + 0.5)
-        sender.value = Float(targetValue)
-        colorBlockSize = Int(pow(2, Double(targetValue + 3)))
+        colorBlockSize = Float(pow(2, Double(sender.value)))
+        takeSnapshotWithCompletion({ (image: UIImage) in
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
+                self?.calculateDominantColorsForImage(image)
+                })
+        })
     }
     
     func takeSnapshotWithCompletion(completion: ((UIImage) ->())?) {
-        UIGraphicsBeginImageContextWithOptions(scrollView.bounds.size, true, 1)
-        let offsetRect = CGRect(x: 0, y: 0, width: scrollView.bounds.size.width, height: scrollView.bounds.size.height)
-        scrollView.drawViewHierarchyInRect(offsetRect, afterScreenUpdates: true)
-        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        
-        completion?(image)
+        if cachedImageIsUpToDate && cachedImage != nil {
+            completion?(cachedImage!)
+        } else {
+            UIGraphicsBeginImageContextWithOptions(scrollView.bounds.size, true, 1)
+            let offsetRect = CGRect(x: 0, y: 0, width: scrollView.bounds.size.width, height: scrollView.bounds.size.height)
+            scrollView.drawViewHierarchyInRect(offsetRect, afterScreenUpdates: true)
+            let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+            UIGraphicsEndImageContext()
+            cachedImage = image
+            cachedImageIsUpToDate = true
+            
+            completion?(image)
+        }
     }
     
 }
@@ -208,6 +219,7 @@ class ViewController: UIViewController {
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         imageView.image = image
+        cachedImageIsUpToDate = false
         
         trashButton.enabled = (imageView.image != nil)
         
@@ -220,7 +232,13 @@ extension ViewController: UIScrollViewDelegate {
         return imageView
     }
     
+    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
+        cachedImageIsUpToDate = false
+    }
+    
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        cachedImageIsUpToDate = false
+
         if !decelerate {
             takeSnapshotWithCompletion({ (image: UIImage) in
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { [weak self] in
